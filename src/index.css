@@ -1,3 +1,35 @@
+.mailing-list-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.mailing-list-form input[type="email"] {
+  padding: 0.5rem 1rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  background: white;
+  color: #068f2d;
+  border: 2px solid #068f2d;
+  border-radius: 4px;
+}
+
+.mailing-list-form button[type="submit"] {
+  padding: 0.5rem 1rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  background-color: white;
+  color: #068f2d;
+  border: 2px solid #068f2d;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+
+
+
 /* FLASHING ACCESS MESSAGE TO TERMINAL */
 
 

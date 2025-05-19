@@ -149,8 +149,30 @@ function App() {
             <button type="submit">Log In</button>
             {error && <p className="login-error">{error}</p>}
           </form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const email = e.target.email.value;
+              fetch('https://script.google.com/macros/s/AKfycbzddy2I9pRlElx6lNr1wQlgs8c89A6fhwbsD4wsZlFWvI4H_Q36qXbB0kQ4Vqc6m3GsaQ/exec', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ email })
+              })
+                .then((res) => res.text())
+                .then((txt) => {
+                  alert("Thanks for subscribing!");
+                  e.target.reset();
+                });
+            }}
+            className="mailing-list-form">
+            <h3>Join Our Mailing List</h3>
+            <p>For exclusive offers, ADC events near you, and more!</p>
+            <input type="email" name="email" placeholder="Enter your email" required />
+            <button type="submit">Subscribe</button>
+          </form>
         </div>
       </div>
+      
 
       {/* ACCESS GRANTED OVERLAY */}
       <div id="access-overlay" className={`access-overlay ${showAccess ? 'flash' : ''}`}>
