@@ -1,0 +1,172 @@
+body {
+  margin: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  background-color: #300000;
+  color: #ff4d4d;
+  height: 100vh;
+  background-image: url('/terminal-bg.png');
+  background-size: 65%;          /* ↓ Shrinks image scale */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-blend-mode: multiply;
+  background-position: 75%;
+  display: flex;
+}
+
+.terminal-container {
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  width: 260px;
+  background: #1a0000;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 2px solid #ff4d4d;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  padding: 12px 10px;
+  margin-bottom: 16px;
+  border-left: 4px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #ff4d4d;
+}
+
+.menu li.active,
+.menu li:hover {
+  border-left: 4px solid #ff4d4d;
+  background-color: #300000;
+  color: white;
+}
+
+.clearance-badge {
+  border-top: 1px solid #ff4d4d;
+  padding-top: 12px;
+  font-size: 0.9rem;
+  color: #ff4d4d;
+  text-transform: uppercase;
+}
+
+.terminal-panel {
+  flex-grow: 1;
+  padding: 50px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.typewriter-text {
+  font-size: 2.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #ff4d4d;
+  animation: typing 3s steps(30), blink-caret 0.75s step-end infinite;
+  width: fit-content;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  50% { border-color: transparent }
+}
+
+.clearance {
+  text-shadow: 0 0 8px #ff4d4d;
+}
+
+.document-strip {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.doc-thumb {
+  width: 350px;
+  height: 550px;
+  filter: blur(3px);
+  object-fit: cover;
+  border-radius: 8px;
+  transition: filter 0.3s ease;
+  cursor: pointer;
+}
+
+.doc-thumb:hover {
+  filter: blur(0px);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(255, 0, 0, 0.85);
+  color: white;
+  font-size: 4rem;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.hidden {
+  display: none;
+}
+
+.map-img {
+  max-width: 100%;
+  border: 2px solid #ff4d4d;
+  margin-top: 20px;
+}
+
+.caption {
+  text-align: center;
+  font-style: italic;
+  margin-top: 10px;
+  color: #ff9999;
+}
+
+.glitch-text {
+  text-shadow: 1px 0 red, -1px 0 cyan;
+}

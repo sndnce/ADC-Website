@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ADC Terminal Verification</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: black;
+      color: #e0e0e0;
+      font-family: 'IBM Plex Mono', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeInPage 2s ease forwards;
+    }
+
+    @keyframes fadeInPage {
+      to { opacity: 1; }
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.01), rgba(255,255,255,0.01) 1px, transparent 1px, transparent 2px);
+      mix-blend-mode: screen;
+      animation: flicker 0.2s infinite;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 0.92; }
+      50% { opacity: 1; }
+      100% { opacity: 0.94; }
+    }
+
+    #matrixRain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 3s ease;
+    }
+
+    .container {
+      text-align: center;
+      width: 80%;
+      max-width: 700px;
+      z-index: 3;
+      position: relative;
+    }
+
+    .adc-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      width: 800px;
+      max-width: 95vw;
+      animation: logoFadeIn 3s ease-in forwards;
+      z-index: 1;
+    }
+
+    @keyframes logoFadeIn {
+      to { opacity: 0.15; }
+    }
+
+    .scanlines, .scan-sweep {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .scanlines {
+      background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.02),
+        rgba(255, 255, 255, 0.02) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+    }
+
+    .scan-sweep {
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0) 100%);
+      animation: sweepDown 3s linear infinite;
+    }
+
+    @keyframes sweepDown {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 55px;
+      background-color: #111;
+      border-radius: 6px;
+      border: 4px solid #00ff88;
+      overflow: hidden;
+      margin-top: 2rem;
+      opacity: 1;
+      transition: opacity 2s ease;
+      box-shadow: 0 0 10px #00ff88;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00ff88, #006633);
+      transition: width 0.2s ease;
+      animation: pulseGlow 2s infinite alternate;
+    }
+
+    .status-overlay {
+      font-size: 1.1rem;
+      margin-top: 1.5rem;
+      color: #00ff88;
+      text-shadow: 0 0 5px #00ff88;
+    }
+
+    .percentage-display {
+      font-size: 1.5rem;
+      margin-top: 0.2rem;
+      color: #33ff66;
+    }
+
+    @keyframes pulseGlow {
+      from {
+        box-shadow: 0 0 8px white;
+      }
+      to {
+        box-shadow: 0 0 18px white;
+      }
+    }
+
+    .verify-btn {
+      margin-top: 3rem;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      color: white;
+      background: transparent;
+      border: 2px solid #00ff88;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 5;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .verify-btn:hover {
+      background-color: #00ff88;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrixRain"></canvas>
+  <img src="/ADCFavicon.png" class="adc-logo" id="adcLogo" />
+  <div class="container">
+    <button class="verify-btn" id="verifyBtn">Please verify your identity</button>
+    <div class="status-overlay" id="statusOverlay" style="display: none;">Verifying Identity...</div>
+    <div class="progress-bar-bg" id="progressBar" style="display: none;">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <div class="percentage-display" id="progressPercent" style="display: none;">0%</div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("matrixRain");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const letters = "アカサタナハマヤラワ0123456789ABCDEF";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    const logo = document.getElementById("adcLogo");
+    const button = document.getElementById("verifyBtn");
+    const bar = document.getElementById("progressBar");
+    const fill = document.getElementById("progressFill");
+    const percent = document.getElementById("progressPercent");
+    const status = document.getElementById("statusOverlay");
+
+    let progress = 0;
+    let matrixActive = false;
+
+    button.addEventListener('click', () => {
+      logo.style.transition = "opacity 2s ease";
+      logo.style.opacity = 0;
+      button.style.display = "none";
+      bar.style.display = "block";
+      percent.style.display = "block";
+      status.style.display = "block";
+      canvas.style.transition = "opacity 4s ease";
+      canvas.style.opacity = 0.2;
+      matrixActive = true;
+
+      const statusMessages = [
+        "Verifying Identity...",
+        "Authenticating Clearance Level...",
+        "Establishing Secure Connection...",
+        "Decrypting Terminal Protocol...",
+        "Initializing User Environment...",
+        "Finalizing Session...",
+        "Access Confirmed."
+      ];
+      const audio = new Audio('/employee-terminal/output.mp3');
+      audio.volume = 1.0;
+      audio.play().catch(err => console.warn("Audio failed:", err));
+      const interval = setInterval(() => {
+        const increment = Math.floor(Math.random() * 3) + 1;
+        progress = Math.min(progress + increment, 100);
+        fill.style.width = progress + "%";
+        percent.textContent = progress + "%";
+
+        const step = Math.floor(progress / (100 / statusMessages.length));
+        if (statusMessages[step]) {
+          status.textContent = statusMessages[step];
+        }
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            window.location.href = "/employee.html";
+          }, 1000);
+        }
+      }, 200);
+    });
+
+    function drawMatrix() {
+      if (!matrixActive) return;
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        const greenShades = ["#00ff00", "#33ff66", "#66ff99", "#00cc44"];
+        ctx.fillStyle = greenShades[Math.floor(Math.random() * greenShades.length)];
+        if (Math.random() < 0.01 && Math.random() > 0.005) {
+          ctx.fillRect(i * fontSize, drops[i] * fontSize, fontSize, fontSize);
+        } else {
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        }
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.985) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    ctx.font = fontSize + "px monospace";
+    setInterval(drawMatrix, 70);
+  </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ADC Terminal - Aspen Demolitions Co.</title>
+  <link rel="stylesheet" href="employee.css" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="terminal-container">
+    <aside class="sidebar">
+      <ul class="menu">
+        <li class="active" onclick="navigateTo('reports')">> View Reports</li>
+        <li onclick="window.location.href='/personnel.html'">> Department Personnel</li>
+        <li onclick="window.location.href='/map.html'">> Pitkin County Map</li>
+        <li onclick="window.location.href='/index.html'">> Return to ADC Home</li>
+      </ul>
+      <div class="clearance-badge">
+        <span>Clearance:</span> <strong>◆ BLACK DIAMOND</strong>
+      </div>
+    </aside>
+
+    <main class="terminal-panel" id="content-panel">
+      <div id="typewriter" class="typewriter-text"></div>
+      <h2>CLEARANCE LEVEL: <span class="clearance">◆ BLACK DIAMOND</span></h2>
+
+      <div class="document-strip" id="reports-section">
+        <img src="/adc-folder.png" alt="Document 1" class="doc-thumb" onclick="openDocument('/ADC-green.png')" />
+        <img src="/adc-folder.png" alt="Document 2" class="doc-thumb" onclick="openDocument('/ADC-blue.png')" />
+        <img src="/adc-folder.png" alt="Document 3" class="doc-thumb restricted" onclick="playDenied()" />
+      </div>
+    </main>
+  </div>
+
+
+  <!-- Modal -->
+  <div id="doc-modal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modal-image" />
+  </div>
+
+  <!-- Overlay -->
+  <div class="modal-overlay" id="access-overlay">
+    <div id="access-message">ACCESS</div>
+  </div>
+
+  <!-- Audio -->
+  <audio id="grantedSound" src="/employee-terminal/access-granted.flac"></audio>
+  <audio id="deniedSound" src="/employee-terminal/access-denied.wav"></audio>
+  <audio id="welcomeAudio">
+    <source src="/welcome.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- JS -->
+  <script src="employee.js"></script>
+  <script>
+    const overlay = document.getElementById('welcome-trigger');
+  
+    overlay.addEventListener('click', () => {
+      const welcomeAudio = document.getElementById('welcomeAudio');
+      if (welcomeAudio) {
+        welcomeAudio.volume = 1.0;
+        welcomeAudio.play()
+          .then(() => {
+            sessionStorage.setItem('welcomePlayed', 'true');
+            overlay.style.display = 'none'; // hide overlay once sound starts
+          })
+          .catch((err) => {
+            console.warn("Welcome audio failed:", err);
+          });
+      }
+    });
+  </script>
+  
+</body>
+</html>
+
+

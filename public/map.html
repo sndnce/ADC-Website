@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ADC // Regional Cartograph</title>
+  <link rel="stylesheet" href="map.css" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="terminal-container">
+    <aside class="sidebar">
+      <ul class="menu">
+        <li><a href="employee.html">> Return to Terminal</a></li>
+        <li><a href="personnel.html">> Personnel Files</a></li>
+        <li><a href="index.html"> > Return to ADC Site</a></li>
+      </ul>
+      <div class="clearance-badge">
+        <span>Clearance:</span> <strong>◆ BLACK DIAMOND</strong>
+      </div>
+    </aside>
+
+    <main class="terminal-panel">
+      <h1 class="glitch-header">ZONAL OVERLAY</h1>
+
+      <div class="map-wrapper">
+        <img src="adc-map.png" alt="Pitkin County Map" class="map-img glitch-border" />
+        <div class="bt-zone-overlay">
+          <div class="bt-marker" style="top: 30%; left: 40%;">High Alert</div>
+          <div class="bt-marker" style="top: 48%; left: 63%;">Low Alert</div>
+          <div class="bt-marker" style="top: 65%; left: 35%;">Moderate Alert</div>
+        </div>
+      </div>
+
+      <p class="caption1">Unauthorized presence within the Buttermilk Exclusion Zone will trigger automated countermeasures in accordance with the X-Games Incident (1978) and Field Report 17.</p>
+        
+        
+      <p class="caption"> Failure to comply with internal policy will result in immediate revocation of clearance, asset seizure, and <strong>activation of failsafe protocols</strong>.
+      </p>
+
+      <div class="minimap-container">
+        <h2 class="minimap-title">Schematic Overlay</h2>
+        <img src="minimap.png" alt="Minimap" class="minimap-img" />
+        <p class="caption1">
+          Travel into <strong>any</strong> Boomtown (BT-1 through BT-5) must be unanimously approved by the ADC Double Black Diamond Directorate.  
+          Unauthorized movement, data extraction, or surface contact constitutes a direct violation of ADC Directive 930-B.<br><br> </p>
+      </div>
+
+      <div class="ticker">
+        <div class="ticker-text">
+          [00:14:03] PLEASE REVIEW YOUR ADC HANDBOOK FOR DIFFUSAL INSTRUCTIONS. 
+          [00:14:11] LOCAL ZONES SCRAMBLED .: SYNC LOST .::....:..
+          [00:14:21] Always say please and thank you to the strange creatures in the woods.
+          [00:14:30] Buttermilk Exclusion Zone - CONTAINMENT SEAL VERIFIED 
+          [00:14:58] Suck my [redacted] -- Agent 27 
+          [01:56:09] {Agent 27 has been terminated}
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <audio id="ambient-audio" autoplay loop>
+    <source src="audio/ambient-terminal-loop.mp3" type="audio/mpeg" />
+  </audio>
+  <audio id="tick-audio" autoplay loop>
+    <source src="audio/terminal-tick-loop.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const ambient = document.getElementById('ambient-audio');
+      const tick = document.getElementById('tick-audio');
+      if (ambient) ambient.volume = 0.15;
+      if (tick) tick.volume = 0.1;
+    });
+  </script>
+</body>
+</html>

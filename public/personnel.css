@@ -1,0 +1,184 @@
+.diamond-glow {
+  font-size: 1.2rem;
+  color: #ff4d4d;
+  animation: pulseDiamond 1.8s infinite ease-in-out;
+  text-shadow: 0 0 6px #ff4d4d, 0 0 12px #ff0000;
+}
+
+@keyframes pulseDiamond {
+  0%, 100% {
+    text-shadow: 0 0 8px #ff4d4d;
+  }
+  50% {
+    text-shadow: 0 0 20px #ff0000;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  background-color: #200000;
+  color: #ff4d4d;
+  position: relative;
+  overflow-x: hidden;
+  background-image: url('/terminal-bg.png');
+  background-size: 70%;          /* ↓ Shrinks image scale */
+}
+
+
+
+.terminal-container {
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+.sidebar {
+  width: 260px;
+  background: #1a0000;
+  color: #ff4d4d;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 2px solid #ff4d4d;
+  height: 100vh;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  padding: 12px 10px;
+  margin-bottom: 16px;
+  border-left: 4px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.menu li.active,
+.menu li:hover {
+  border-left: 4px solid #ff4d4d;
+  color: white;
+  background-color: #300000;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+}
+
+.clearance-badge {
+  border-top: 1px solid #ff4d4d66;
+  padding-top: 12px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.terminal-panel {
+  flex-grow: 1;
+  padding: 50px;
+  background-color: #200000;
+}
+
+.terminal-panel h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  /* text-shadow: 0 0 4px #ff4d4d; */
+}
+
+.subtitle {
+  color: #ff9999;
+  margin-bottom: 40px;
+  font-size: 0.9rem;
+}
+
+.personnel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 30px;
+  
+}
+
+.personnel-card {
+  background: #1a0000;
+  border: 2px solid #ff4d4d;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 8px #ff4d4d44;
+  position: relative;
+  z-index: 1;
+}
+
+.personnel-card img {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  border: 1px solid #ff4d4d33;
+}
+
+.info {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Blurred background effect */
+.personnel-grid:hover .personnel-card {
+  filter: blur(1px) brightness(0.5);
+  transform: scale(0.95);
+  opacity: 0.6;
+}
+
+.personnel-grid .personnel-card:hover {
+  filter: none !important;
+  transform: scale(1.03);
+  opacity: 1;
+  box-shadow: 0 0 22px #ff4d4d, 0 0 10px #ff0000aa;
+  z-index: 10;
+}
+
+.redacted {
+  background: black;
+  color: white;
+  padding: 2px 6px;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 0 red, -1px 0 cyan;
+}
+
+/* All security clearances now glow */
+.clearance-tag {
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #ff4d4d;
+  text-shadow: 0 0 4px red, 0 0 10px #ff4d4d88;
+  animation: pulseDiamond 1.8s infinite ease-in-out;
+}
+
+.diamond-glow {
+  font-size: 1.2rem;
+  color: #ff4d4d;
+  animation: pulseDiamond 1.8s infinite ease-in-out;
+  text-shadow: 0 0 6px #ff4d4d, 0 0 12px #ff0000;
+}
+
+@keyframes pulseDiamond {
+  0%, 100% {
+    text-shadow: 0 0 8px #ff4d4d;
+  }
+  50% {
+    text-shadow: 0 0 20px #ff0000;
+  }
+}

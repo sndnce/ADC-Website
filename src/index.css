@@ -1,13 +1,430 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* FLASHING ACCESS MESSAGE TO TERMINAL */
+
+
+form {
+  margin-top: 2rem;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+input[type="email"] {
+  padding: 0.5rem 1rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  background: black;
+  color: #00ff88;
+  border: 2px solid #00ff88;
+  border-radius: 4px;
+  width: 60%;
+  margin-right: 1rem;
+}
+
+button[type="submit"] {
+  padding: 0.5rem 1rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  background: transparent;
+  color: white;
+  border: 2px solid #00ff88;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #00ff88;
+  color: black;
+}
+
+.access-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 0, 0, 0); /* transparent red at start */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: background 0.5s ease, opacity 0.5s ease;
+}
+
+.access-overlay.fade-in {
+  background: rgba(255, 0, 0, 0.8); /* red overlay */
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.access-message {
+  font-size: 4rem;
+  font-family: 'IBM Plex Mono', monospace;
+  color: #ff6666;
+  text-shadow:
+    0 0 10px #ff0000,
+    0 0 20px #ff0000,
+    0 0 40px #ff0000,
+    0 0 80px #ff0000;
+  animation: glowPulse 1s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from {
+    text-shadow:
+      0 0 5px #ff0000,
+      0 0 10px #ff0000,
+      0 0 20px #ff0000,
+      0 0 40px #ff0000;
+  }
+  to {
+    text-shadow:
+      0 0 10px #ff6666,
+      0 0 20px #ff6666,
+      0 0 40px #ff6666,
+      0 0 80px #ff6666;
+  }
+}
+
+
+/* ========== Global Styles ========== */
+body {
+  margin: 0;
+  font-family: Caslon, serif;
+}
+
+/* ========== Left Banner ========== */
+.left-banner {
+  background-color: #d3d3d3;
+  width: 14%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: #1a620f;
+}
+
+.left-banner img {
+  width: 90%;
+  height: auto;
+  max-height: 80%;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.left-banner p,
+.left-banner ul,
+.left-banner img {
+  margin-bottom: 5px;
+  padding: 0;
+}
+
+.left-banner ul {
+  margin-top: 5px;
+  padding-left: 15px;
+}
+
+.optionmenu {
+  font-weight: bold;
+}
+
+.options {
+  text-decoration: underline;
+  transition: color 0.3s, font-weight 0.3s;
+}
+
+.options li:hover {
+  font-weight: bold;
+  color: #00ab41;
+}
+
+/* ========== Center Content ========== */
+.app-container {
+  display: flex;
+}
+
+.main-layout {
+  display: flex;
+  flex-grow: 1;
+  margin-left: 14%;
+  width: 86%;
+} 
+
+.content {
+  flex: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.stackbox {
+  padding: 0;
+  width: 100%;
+  margin-top: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stackbox img {
+  display: block;
+  margin: 0 auto 20px;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+
+.slogan {
+  font-size: x-large;
+  font-style: italic;
+  align-items: flex-start;
+}
+
+/* .para {
+  font-size: large;
+  line-height: 1.5;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100%;
+} */
+
+.cpr {
+  font-style: italic;
+}
+
+.bold {
+  font-size: large;
+  font-weight: 600;
+  margin-top: 50px;
+  color: #1a620f;
+}
+
+.Options {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 25px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+/* ========== Right Section ========== */
+.right-section {
+  width: 22%;
+  padding: 20px;
+  background-color: #ffffff;
+  border-left: 1px solid #ccc;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.right-section img {
+  width: 100%;
+  max-width: 275px;
+  max-height: 275px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ========== Recent Blasts Section ========== */
+.recent-blasts h3 {
+  margin-bottom: 10px;
+}
+
+.recent-blasts ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recent-blasts ul div {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.recent-blasts p {
+  font-size: 0.9rem;
+  line-height: 1.3;
+  margin: 0;
+  padding: 5px 0;
+}
+
+/* ========== Album Overlay GIF ========== */
+.album-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 275px;
+  margin: 0 auto 20px;
+}
+
+.album-wrapper img:first-child {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.album-wrapper .overlay-gif {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -40%);
+  width: 250px;
+  height: auto;
+}
+
+/* ========== Mailing List Form ========== */
+form {
+  margin-top: 20px;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background-color: #1a620f;
+  color: white;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #145117;
+}
+
+.employee-login-form {
+  border: 5px solid #145117;
+  border-radius: 16px;
+  padding: 2rem;
+  color: rgb(0, 0, 0);
+}
+
+/* ========== FBI Terminal UI (Red Theme) ========== */
+.fbi-terminal {
+  background-color: #2b0000;
+  color: #ff4d4d;
+  font-family: 'Courier New', monospace;
+  min-height: 100vh;
+  padding: 40px;
+  text-align: center;
+  opacity: 0.95;
+}
+
+.fbi-terminal h1,
+.fbi-terminal h2 {
+  text-shadow: 0 0 5px #ff0000;
+}
+
+.fbi-terminal .login-form input {
+  background: black;
+  border: 2px solid #ff4d4d;
+  color: #ff4d4d;
+  padding: 10px;
+  margin: 10px;
+  font-family: 'Courier New', monospace;
+  width: 250px;
+  text-align: center;
+}
+
+.fbi-terminal .login-form button {
+  padding: 10px;
+  border: 2px solid #ff4d4d;
+  background: transparent;
+  color: #ff4d4d;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+}
+
+.fbi-terminal .granted {
+  color: #ff4d4d;
+  font-size: 2rem;
+  text-shadow: 0 0 10px #ff4d4d;
+  margin-top: 20px;
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.fbi-terminal .loading-bar {
+  border: 2px solid #ff4d4d;
+  width: 300px;
+  height: 20px;
+  margin: 30px auto;
+  padding: 2px;
+}
+
+.fbi-terminal .loading-bar .bar {
+  background: #ff4d4d;
+  width: 0%;
+  height: 100%;
+  animation: loadBar 2s forwards;
+}
+
+@keyframes loadBar {
+  to {
+    width: 100%;
+  }
+}
+
+.fbi-terminal .clearance-display {
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
+
+.fbi-terminal .level {
+  font-weight: bold;
+  color: #ff4d4d;
+  text-shadow: 0 0 5px #ff4d4d;
+}
+
+.fbi-terminal .terminal-panel {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.fbi-terminal .terminal-btn {
+  background: transparent;
+  border: 2px solid #ff4d4d;
+  color: #ff4d4d;
+  padding: 12px;
+  font-size: 1rem;
+  width: 250px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px #ff4d4d66;
+}
+
+.fbi-terminal .terminal-btn:hover {
+  background: #ff4d4d;
+  color: black;
+  box-shadow: 0 0 20px #ff4d4d;
 }
