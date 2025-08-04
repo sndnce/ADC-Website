@@ -11,7 +11,7 @@
   <div class="terminal-container">
     <aside class="sidebar">
       <ul class="menu">
-        <li class="active" onclick="navigateTo('reports')">> View Reports</li>
+        <li class="active" onclick="navigateTo('reports')">> View Documents</li>
         <li onclick="window.location.href='/personnel.html'">> Department Personnel</li>
         <li onclick="window.location.href='/map.html'">> Pitkin County Map</li>
         <li onclick="window.location.href='/index.html'">> Return to ADC Home</li>
@@ -25,11 +25,65 @@
       <div id="typewriter" class="typewriter-text"></div>
       <h2>CLEARANCE LEVEL: <span class="clearance">◆ BLACK DIAMOND</span></h2>
 
-      <div class="document-strip" id="reports-section">
-        <img src="/adc-folder.png" alt="Document 1" class="doc-thumb" onclick="openDocument('/ADC-green.png')" />
-        <img src="/adc-folder.png" alt="Document 2" class="doc-thumb" onclick="openDocument('/ADC-blue.png')" />
-        <img src="/adc-folder.png" alt="Document 3" class="doc-thumb restricted" onclick="playDenied()" />
+      <div class="document-strip">
+        <div class="doc-block">
+          <img src="/rushmoreclipping.png" class="doc-thumb" onclick="openDocument('/ADC-green1.png')" />
+          <div class="doc-meta">
+            <h4 class="doc-title">Newspaper Clipping</h4>
+            <p class="doc-desc">An ancient newspaper detailing the death of Robert Pitkin at Mount Rushmore.</p>
+          </div>
+        </div>
+        <div class="doc-block" onclick="openJournal('childhood')">
+          <img src="journals/Katzchen.png" class="doc-thumb" onclick="openDocument('/ADC-green1.png')" />
+          <div class="doc-meta">
+            <h4 class="doc-title">Katzchen_1.pdf</h4>
+            <p class="doc-desc">Julien Pitkin's childhood journal. Details his life at the Pitkin Estate.</p>
+          </div>
+        </div>
+        <div class="doc-block" onclick="openJournal('midteens')">
+          <img src="journals/Essays.png" class="doc-thumb" onclick="openDocument('/ADC-green1.png')" />
+          <div class="doc-meta">
+            <h4 class="doc-title">Katzchen_2.pdf</h4>
+            <p class="doc-desc">A continuation of Julien Pitkin's journal. Written during his early adolescent years at the Pitkin Estate. </p>
+          </div>
+        </div>
+        <div class="doc-block" onclick="openJournal('finals')">
+          <img src="journals/Apres.png" class="doc-thumb" onclick="openDocument('/ADC-green1.png')" />
+          <div class="doc-meta">
+            <h4 class="doc-title">Katzchen_3.pdf</h4>
+            <p class="doc-desc">The closing entries of Julien Pitkin's childhood journal. Composed during his late adolescence years at the Pitkin Estate. </p>
+          </div>
+        </div>
+        <div class="doc-block">
+          <img src="adc-green-folder.png" class="doc-thumb" onclick="openDocument('/ADC-green1.png')" />
+          <div class="doc-meta">
+            <h4 class="doc-title">Green Documents</h4>
+            <p class="doc-desc">Miscellaneous documents, approved for viewing with Green Clearance. </p>
+          </div>
+        </div>
+        <div class="doc-block" >
+          <img src="ADC-green.png" class="doc-thumb" onclick="openDocument('/ADC-green1.png')" />
+          <div class="doc-meta">
+            <h4 class="doc-title">Field Report</h4>
+            <p class="doc-desc"> A document detailing C-77 production and experimentation in the late 70s. </p>
+          </div>
+        </div>
+        <div class="doc-block" >
+          <img src="ADC-blue.png" class="doc-thumb" onclick="openDocument('/ADC-green1.png')" />
+          <div class="doc-meta">
+            <h4 class="doc-title">Aprés Field Report</h4>
+            <p class="doc-desc"> An internal memo courtesy of the Aprés Division on the existance of Boomtowns. Declassified in 2001. </p>
+          </div>
+        </div>
+        <div class="doc-block" >
+          <img src="adc-black.png" class="doc-thumb" onclick="openDocument('/ADC-green1.png')" />
+          <div class="doc-meta">
+            <h4 class="doc-title">Field Report</h4>
+            <p class="doc-desc"> A incident report concerning the Aspen X-Games of 1999. Double Black Diamond clearance Required.  </p>
+          </div>
+        </div>
       </div>
+      
     </main>
   </div>
 
@@ -38,6 +92,19 @@
   <div id="doc-modal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modal-image" />
+  </div>
+
+  <div id="journalModal" class="modal">
+    <span class="close" onclick="closeJournal()">&times;</span>
+    <div style="text-align: center;">
+      <h3 id="page-title" style="color: white; margin-bottom:10px"></h3>
+      <img id="journalImage" class="modal-content" style="max-height: 90vh;" />
+      <div style="margin-top: 12px; color: red;">
+        <button onclick="prevPage()">◀ Prev</button>
+        <span id="page-count" style="margin: 0 12px;"></span>
+        <button onclick="nextPage()">Next ▶</button>
+      </div>
+    </div>
   </div>
 
   <!-- Overlay -->
@@ -51,6 +118,7 @@
   <audio id="welcomeAudio">
     <source src="/welcome.mp3" type="audio/mpeg">
   </audio>
+  <audio id="pageturn" src="/pageturn.mp3"> </audio></audio>
 
   <!-- JS -->
   <script src="employee.js"></script>
@@ -72,6 +140,30 @@
       }
     });
   </script>
+  <script>
+    const pageturnAudio = document.getElementById('pageturn');
+  
+    function nextPage() {
+      if (currentIndex < currentJournal.length - 1) {
+        currentIndex++;
+        renderCurrentPage();
+  
+        pageturnAudio.currentTime = 0;
+        pageturnAudio.play().catch(err => console.warn("PageTurn failed:", err));
+      }
+    }
+  
+    function prevPage() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderCurrentPage();
+  
+        pageturnAudio.currentTime = 0;
+        pageturnAudio.play().catch(err => console.warn("PageTurn failed:", err));
+      }
+    }
+  </script>
+
   
 </body>
 </html>
