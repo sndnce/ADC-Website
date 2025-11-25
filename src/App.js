@@ -79,20 +79,18 @@ function App() {
               <div className="compound-77-paragraphs">
                 <img src="/C-77.png" alt="Compound-77" />
                 <p>At the heart of each of the Aspen Demolitions Products lies our famous high energy nitroamine based explosive, Compound-77(C-77).</p>
-                <p>C-77 synthesis begins with the nitration of aniline using a mixture of concentrated nitric and sulfuric acid to form 2,4,6-trinitroaniline (TNA). This intermediate is then reacted with hydrazine hydrate in methanol and Compound-77, and through the Aspen Demolitions Company's propriety process yields a fused triazole-nitroamine ring structure. Upon completion of the Aspen Demolitions Company's riguous quality assurance procedure the crude product is precipitated in ice water and purified via recrystallization from acetone. The resulting C-77 exhibits high detonation velocity (~9,100 m/s) and moderate impact sensitivity, making it suitable for military and demolition applications.
-                </p>
                 <p>In keeping with Robert Pitkin's unwavering dedication to preserving the natural beauty of the United States, Compound-77(C-77) has been engineered with environmental sustainability in mind. Its unique formulation not only minimizes ecological impact but, intriguingly, has been reported to attract and even help reintroduce robust American wildlife-- including species believed to have lain dormant for centuries. In some mysterious cases, creatures thought to have vanished for centuries have seemingly re-emerged in areas where C-77 has been deployed. Whether this phenomenon is due to chemical properties stimulating dormant biological mechanisms or something far more fascinating is a current subject of the Aspen Demolitions Company's cutting-edge research and development team.</p>
               </div>
 
               <p className="bold">Visit Us</p>
               <img src="/ADC_storefront_.png" alt="Storefront" />
-              <p>340 S Galena Street, Aspen CO 81611.</p>
+              <p>320 S Galena Street, Aspen CO 81611.</p>
               <p>Hours of Operation:</p>
               <p>Mon–Thu: 12pm–9pm</p>
               <p>Fri–Sun: 10am–11pm</p>
 
               <p className="bold">Contact</p>
-              <button onClick={() => window.location.href = 'mailto:aspendemolitions@gmail.com'}>
+              <button onClick={() => window.location.href = 'mailto:aspendemolitions.talent@gmail.com'}>
                 Click Here to Email Us
               </button>
               <p>For government agents, please refer to the Department of Defense directory.</p>
@@ -108,7 +106,7 @@ function App() {
               <img src="/new-blinking-new-blinking-without-background.gif" className="overlay-gif" alt="New" />
             </div>
             <a href="https://spotify.com" target="_blank" rel="noopener noreferrer">
-              Available on Spotify!
+              Coming Soon to Spotify!
             </a>
             <p>Featuring 10 of Mr. Pitkin's favorite tracks; inspired by Pop, Eurodance, and Italo Disco.</p>
           </div>
@@ -117,7 +115,7 @@ function App() {
             <h3>Recent Blasts</h3>
             <div className="jack">
               <img src="/trade-show.webp" alt="Jack Pitkin" />
-              <p>Jack Pitkin to Speak @ Upcoming EXCON in North Carolina.</p>
+              <p>Dr. Katt to speak @ Upcoming EXCON in North Carolina.</p>
             </div>
             <div className="wooley-mammoth">
               <img src="/woolley-mamoth.webp" alt="Mammoth" />
@@ -164,7 +162,7 @@ function App() {
                   e.target.reset();
                 });
             }}
-            className="mailing-list-form">
+            className="employee-login-form2">
             <h3>Join Our Mailing List</h3>
             <p>For exclusive offers, ADC events near you, and more!</p>
             <input type="email" name="email" placeholder="Enter your email" required />

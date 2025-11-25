@@ -342,14 +342,21 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #145117;
+  background-color: #009523;
 }
 
 .employee-login-form {
-  border: 5px solid #145117;
+  border: 5px solid #920c0c;
   border-radius: 16px;
   padding: 2rem;
-  color: rgb(0, 0, 0);
+  color: rgb(139, 38, 38);
+}
+
+.employee-login-form2 {
+  border: 5px solid #004f04;
+  border-radius: 16px;
+  padding: 2rem;
+  color: rgb(25, 122, 39);
 }
 
 /* ========== FBI Terminal UI (Red Theme) ========== */
