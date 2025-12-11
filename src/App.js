@@ -5,7 +5,7 @@ function App() {
   const [username, setUsername] = useState('');
   const [passcode, setPasscode] = useState('');
   const [error, setError] = useState('');
-  const [showAccess, setShowAccess] = useState(false);
+  // const [showAccess, setShowAccess] = useState(false);
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
@@ -160,8 +160,6 @@ function App() {
             <button type="submit">Subscribe</button>
           </form>
           <div className="phone-number">
-            <img src="/explosion.gif">
-            </img>
             <h3>Call today and get a FREE Quote!</h3>
             <h1 className="phone">970-924-0638</h1>
           </div>
