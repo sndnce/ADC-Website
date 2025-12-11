@@ -18,7 +18,7 @@ function App() {
     if (username === 'rGlenwd19' && passcode === 'Porsche9301978') {
       setError('');
       setSuccess("The Aspen Demolitions Company values your dedication, Researcher Glenwood.")
-      setShowAccess(true);
+      // setShowAccess(true);
 
     } else {
       const denied = new Audio('/employee-terminal/access-denied.mp3');
