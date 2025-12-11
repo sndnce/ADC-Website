@@ -32,6 +32,17 @@ function App() {
 
   return (
     <div className="app-container">
+
+      <form 
+        name="adc-email-list"
+        netlify
+        netlify-honeypot="bot-field"
+        hidden
+      >
+        <input type="email" name="email" />
+        <input type="text" name="location" />
+      </form>
+
       <div className="left-banner">
         <img src="/ADCFavicon.png" alt="Logo" />
         <p className="Welcomenote">Welcome to the official webpage of the Aspen Demolitions Company.</p>
@@ -139,26 +150,49 @@ function App() {
             {success && <p className="login-success">{success}</p>}
           </form>
           <form
+            name="adc-email-list-visible"
             onSubmit={(e) => {
               e.preventDefault();
-              const email = e.target.email.value;
-              fetch('https://script.google.com/macros/s/AKfycbzddy2I9pRlElx6lNr1wQlgs8c89A6fhwbsD4wsZlFWvI4H_Q36qXbB0kQ4Vqc6m3GsaQ/exec', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ email })
+
+              const formData = new FormData();
+              formData.append("form-name", "adc-email-list");
+              formData.append("email", e.target.email.value);
+              formData.append("location", e.target.location.value);
+
+              fetch("/", {
+                method: "POST",
+                body: formData
               })
-                .then((res) => res.text())
-                .then((txt) => {
+                .then(() => {
                   alert("Thanks for subscribing!");
                   e.target.reset();
-                });
+                })
+                .catch((err) => alert("Error: " + err));
             }}
-            className="employee-login-form2">
+            className="employee-login-form2"
+          >
             <h3>Join Our Mailing List</h3>
             <p>For exclusive offers, ADC events near you, and more!</p>
-            <input type="email" name="email" placeholder="Enter your email" required />
+
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Enter your email" 
+              required 
+            />
+
+            <select name="location" required>
+              <option value="">Select your location</option>
+              <option value="West Coast">West Coast</option>
+              <option value="Midwest">Midwest</option>
+              <option value="South">South</option>
+              <option value="East Coast">East Coast</option>
+              <option value="International">International</option>
+            </select>
+
             <button type="submit">Subscribe</button>
           </form>
+
           <div className="phone-number">
             <h3>Call today and get a FREE Quote!</h3>
             <h1 className="phone">970-924-0638</h1>
@@ -171,3 +205,4 @@ function App() {
 }
 
 export default App;
+
